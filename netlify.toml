@@ -4,3 +4,11 @@
 
 [build.environment]
   NODE_VERSION = "22"
+  # AI_API_KEY is server-only, but Netlify may still detect it in the
+  # generated Next.js server bundle. Keep source scanning enabled and
+  # skip only build output to avoid false-positive deploy blocks.
+  SECRETS_SCAN_OMIT_PATHS = ".next,.netlify"
+  # These are configuration values, not secrets. If they are added in
+  # Netlify as secret variables, Netlify may flag normal strings such as
+  # "openai-compatible", "60000", or ".next" in source files.
+  SECRETS_SCAN_OMIT_KEYS = "AI_API_BASE_URL,AI_API_FORMAT,AI_API_MODEL,AI_API_TIMEOUT_MS,AI_USE_MOCK,SECRETS_SCAN_OMIT_PATHS"
